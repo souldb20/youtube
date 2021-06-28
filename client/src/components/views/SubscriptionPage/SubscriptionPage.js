@@ -1,5 +1,5 @@
-import moment from 'moment';
 import React, { useEffect, useState } from 'react'
+import moment from 'moment';
 import { FaCode } from "react-icons/fa";
 import { Typography, Row, Col, Card, Icon, Avatar } from 'antd';
 import Axios from 'axios';
@@ -7,17 +7,21 @@ import Axios from 'axios';
 const { Title } = Typography;
 const { Meta } = Card;
 
-
-function LandingPage() {
+function SubscriptionPage() {
 
     const [Video, setVideo] = useState([])
 
     useEffect(() => {
+
+        const subscriptionVariables = {
+            userFrom : localStorage.getItem('userId')
+        }
+
        
-        Axios.get('/api/video/getVideos')
+        Axios.post('/api/video/getSubscriptionVideos', subscriptionVariables)
         .then(response => {
             if(response.data.success) {
-                console.log(response.data)
+                console.log(response.data.videos)
                 setVideo(response.data.videos)
             } else {
                 alert('비디오 가져오기를 실패 했습니다.')
@@ -25,7 +29,6 @@ function LandingPage() {
         })
 
     }, [])
-
 
     const renderCards =  Video.map((video, index) => {
 
@@ -59,7 +62,7 @@ function LandingPage() {
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
-            <Title level={2} > 추천영상 </Title>
+            <Title level={2} > 내가 구독한 영상 </Title>
             <hr />
             <Row gutter={[32, 16]}>
 
@@ -72,6 +75,7 @@ function LandingPage() {
 
         </div>
     )
+
 }
 
-export default LandingPage
+export default SubscriptionPage

@@ -9,8 +9,8 @@ const { Title } = Typography;
 
 
 const PrivateOptions = [
-    {value : 0, label : "Private" },
-    {value : 1, label : "Public" }
+    {value : 0, label : "Public" },
+    {value : 1, label : "Private" }
 ]
 
 const CategoryOptions = [
@@ -19,10 +19,11 @@ const CategoryOptions = [
     {value : 2, label : "Music"},
     {value : 3, label : "Pets & Animals"},
     {value : 4, label : "Eating"},
-    {value : 5, label : "Games"}
+    {value : 5, label : "Games"},
+    {value : 6, label : "Etc"}
 ]
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
 
     const user = useSelector(state => state.user);
     const [VideoTitle, setVideoTitle] = useState("")
@@ -107,7 +108,13 @@ function VideoUploadPage() {
         .then(response => {
             if(response.data.success) {
 
-                console.log(response.data)
+                message.success('성공적으로 업로드를 했습니다.')
+
+                setTimeout(() => {
+
+                }, 3000);
+
+                props.history.push('/')
 
             } else {
                 alert(' 비디오 업로드에 실패 했습니다.')
