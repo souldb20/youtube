@@ -15,17 +15,18 @@ const PrivateOptions = [
 
 const CategoryOptions = [
     {value : 0, label : "Film & Animation"},
-    {value : 1, label : "Auto & Vehicles"},
-    {value : 2, label : "Music"},
-    {value : 3, label : "Pets & Animals"},
-    {value : 4, label : "Eating"},
-    {value : 5, label : "Games"},
-    {value : 6, label : "Etc"}
+    {value : 0, label : "Auto & Vehicles"},
+    {value : 0, label : "Music"},
+    {value : 0, label : "Pets & Animals"},
+    {value : 0, label : "Eating"},
+    {value : 0, label : "Games"},
+    {value : 0, label : "Etc"}
 ]
 
 function VideoUploadPage(props) {
 
     const user = useSelector(state => state.user);
+
     const [VideoTitle, setVideoTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Private, setPrivate] = useState(0)
@@ -50,46 +51,18 @@ function VideoUploadPage(props) {
         setCategory(e.currentTarget.value)
     }
 
-    const onDrop = (files) => {
-        
-        let formData = new FormData;
-        const config = {
-            header: {'content-type': 'multipart/form-data'}
-        }
-        formData.append("file", files[0])
-
-        Axios.post('/api/video/uploadfiles', formData, config)
-        .then(response => {
-            if(response.data.success) {
-                console.log(response.data)
-                
-                let variable = {
-                    url:response.data.url,
-                    fileName: response.data.fileName
-                }
-
-                setFilePath(response.data.url)
-
-                Axios.post('/api/video/thumbnail', variable)
-                .then(response => {
-                    if(response.data.success) {
-
-                        setDuration(response.data.fileDuration)
-                        setThumbnailPath(response.data.url)
-
-                    } else {
-                        alert('썸네일 생성에 실패 했습니다.')
-                    }
-                })
-
-            } else {
-                alert('비디오 업로드를 실패했습니다.')
-            }
-        })
-    }
-
     const onSubmit = (e) => {
         e.preventDefault();
+
+        if (user.userData && !user.userData.isAuth) {
+            return alert('Please Log in First')
+        }
+
+        if (VideoTitle === "" || Description === "" ||
+            Category === "" || FilePath === "" ||
+            Duration === "" || ThumbnailPath === "") {
+            return alert('Please first fill all the fields')
+        }
 
         const variables = {
             writer : user.userData._id,
@@ -118,6 +91,44 @@ function VideoUploadPage(props) {
 
             } else {
                 alert(' 비디오 업로드에 실패 했습니다.')
+            }
+        })
+    }
+
+    const onDrop = (files) => {
+        
+        let formData = new FormData;
+        const config = {
+            header: {'content-type': 'multipart/form-data'}
+        }
+        formData.append("file", files[0])
+
+        Axios.post('/api/video/uploadfiles', formData, config)
+        .then(response => {
+            if(response.data.success) {
+                console.log(response.data)
+                
+                let variable = {
+                    filePath:response.data.filePath,
+                    fileName: response.data.fileName
+                }
+
+                setFilePath(response.data.filePath)
+
+                Axios.post('/api/video/thumbnail', variable)
+                .then(response => {
+                    if(response.data.success) {
+
+                        setDuration(response.data.fileDuration)
+                        setThumbnailPath(response.data.url)
+
+                    } else {
+                        alert('썸네일 생성에 실패 했습니다.')
+                    }
+                })
+
+            } else {
+                alert('비디오 업로드를 실패했습니다.')
             }
         })
     }
@@ -189,7 +200,7 @@ function VideoUploadPage(props) {
 
             <select onChange={onCategoryChange}>
                 {CategoryOptions.map((item, index) => (
-                    <option key={index} value={item.value}>{item.label}</option>
+                    <option key={index} value={item.label}>{item.label}</option>
                 ))}
             </select>
 
