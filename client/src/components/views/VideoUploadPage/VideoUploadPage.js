@@ -149,7 +149,7 @@ function VideoUploadPage(props) {
                     maxSize={100000000}
                     >
                     {({getRootProps, getInputProps}) => (
-                        <div style={{ width: '300px', height: '240px', border:'2px solid red', alignItems:'center', justifyContent:'center'}} {...getRootProps()}>
+                        <div style={{ width: '300px', height: '240px', border:'2px solid red', display: 'flex',alignItems:'center', justifyContent:'center'}} {...getRootProps()}>
                             <input {...getInputProps()} />
                             <Icon type="plus" style={{ fontSize:'3rem' }} />
 
@@ -174,17 +174,19 @@ function VideoUploadPage(props) {
 
             <br />
             <br />
-            <label>Title</label>
+            <label>제목</label>
             <Input 
                 onChange={onTitleChange}
                 value={VideoTitle}
+                placeholder="제목을 입력하세요"
             />
             <br />
             <br />
-            <label>Description</label>
+            <label>내용</label>
             <TextArea 
                 onChange={onDescriptionChange}
                 value={Description}
+                placeholder="내용을 입력하세요"
             />
             <br />
             <br />
@@ -207,7 +209,7 @@ function VideoUploadPage(props) {
             <br />
             <br />
 
-            <Button type="primary" size="large" onClick={onSubmit}>Submit</Button>
+            <Button type="primary" size="large" onClick={onSubmit}>업로드하기</Button>
                 
             </Form>
         </div>

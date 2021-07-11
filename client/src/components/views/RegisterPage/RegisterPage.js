@@ -104,7 +104,7 @@ function RegisterPage(props) {
               <Form.Item required label="Name">
                 <Input
                   id="name"
-                  placeholder="Enter your name"
+                  placeholder="이름을 입력해주세요"
                   type="text"
                   value={values.name}
                   onChange={handleChange}
@@ -121,7 +121,7 @@ function RegisterPage(props) {
               <Form.Item required label="Last Name">
                 <Input
                   id="lastName"
-                  placeholder="Enter your Last Name"
+                  placeholder="성을 입력해주세요"
                   type="text"
                   value={values.lastName}
                   onChange={handleChange}
@@ -138,7 +138,7 @@ function RegisterPage(props) {
               <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
-                  placeholder="Enter your Email"
+                  placeholder="메일을 입력해주세요"
                   type="email"
                   value={values.email}
                   onChange={handleChange}
@@ -155,7 +155,7 @@ function RegisterPage(props) {
               <Form.Item required label="Password" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
                 <Input
                   id="password"
-                  placeholder="Enter your password"
+                  placeholder="비밀번호를 입력해주세요"
                   type="password"
                   value={values.password}
                   onChange={handleChange}
@@ -172,7 +172,7 @@ function RegisterPage(props) {
               <Form.Item required label="Confirm" hasFeedback>
                 <Input
                   id="confirmPassword"
-                  placeholder="Enter your confirmPassword"
+                  placeholder="비밀번호를 확인해주세요"
                   type="password"
                   value={values.confirmPassword}
                   onChange={handleChange}
